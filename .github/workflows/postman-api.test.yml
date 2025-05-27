@@ -1,25 +1,33 @@
 name: Newman API Tests
+
 on:
-workflow_dispatch:
+  workflow_dispatch:
+
 jobs:
-test:
-defaults:
-run:
-working-directory: ./tests
-environment: staging
-name: 'Run tests'
-runs-on: ubuntu-latest
-steps:
+  test:
+    name: 'Run tests'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./tests
+    environment: staging
+    steps:
+      - uses: actions/checkout@v2
 
-Github Action Postman 4
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18'
 
-- uses: actions/checkout@v2
-- uses: actions/setup-node@v2
-with:
-node-version: '18'
-- name: 'Install newman'
-run: 'npm install -g newman'
-- name : 'Install newman reporter'
-run: 'npm install -g newman-reporter-htmlextra '
-- name: 'Run tests'
-run: 'newman run Reqres.postman_collection.json -e Reqres.postman_environment.json -r htmlextra - reporter-htmlextra-export htmlreport.html - reporter-htmlextra-darkTheme > runreport1.html'
+      - name: 'Install newman'
+        run: npm install -g newman
+
+      - name: 'Install newman reporter'
+        run: npm install -g newman-reporter-htmlextra
+
+      - name: 'Run tests'
+        run: |
+          newman run Reqres.postman_collection.json \
+            -e Reqres.postman_environment.json \
+            -r htmlextra \
+            --reporter-htmlextra-export htmlreport.html \
+            --reporter-htmlextra-darkTheme
