@@ -25,9 +25,4 @@ jobs:
         run: npm install -g newman-reporter-htmlextra
 
       - name: 'Run tests'
-        run: |
-          newman run Reqres.postman_collection.json \
-            -e Reqres.postman_environment.json \
-            -r htmlextra \
-            --reporter-htmlextra-export htmlreport.html \
-            --reporter-htmlextra-darkTheme
+        run: 'newman run Reqres.postman_collection.json -e Reqres.postman_environment.json -r htmlextra - reporter-htmlextra-export htmlreport.html - reporter-htmlextra-darkTheme > runreport1.html'
